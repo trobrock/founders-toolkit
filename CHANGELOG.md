@@ -7,5 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.1.0] - 2021-03-25
+- No real change, just CI
+
+## [0.1.0] - 2021-03-25
 ### Added
 - Initial Project, so... everything.
