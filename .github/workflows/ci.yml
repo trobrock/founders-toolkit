@@ -1,0 +1,50 @@
+name: CI
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get version
+      id: version
+      run: |
+        VERSION=$(cat lib/founders_toolkit/version.rb | awk '/VERSION/{ print $3 }' | tr -d "'")
+        echo "::set-output name=version::$VERSION"
+    - name: Check if published release exists
+      id: published-release
+      run: |
+        ID=$(curl --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          https://api.github.com/repos/trobrock/founders-toolkit/releases | jq '.[] | select(.tag_name == "v${{ steps.version.outputs.version }}" and .draft == false) | .id')
+        echo "::set-output name=id::$ID"
+    - name: Check if draft release exists
+      id: release
+      run: |
+        ID=$(curl --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          https://api.github.com/repos/trobrock/founders-toolkit/releases | jq '.[] | select(.tag_name == "v${{ steps.version.outputs.version }}" and .draft) | .id')
+        echo "::set-output name=id::$ID"
+    - name: Delete previous release
+      if: steps.release.outputs.id
+      run: |
+        curl --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          -X DELETE \
+          https://api.github.com/repos/trobrock/founders-toolkit/releases/${{ steps.release.outputs.id }}
+    - name: Get version changes
+      if: ${{ ! steps.published-release.outputs.id }}
+      run: |
+        awk -v version='[${{ steps.version.outputs.version }}]' '/^## / {printit = $2 == version}; printit;' CHANGELOG.md > RELEASE_CHANGELOG.md
+    - uses: actions/create-release@v1
+      if: ${{ ! steps.published-release.outputs.id }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+      with:
+        tag_name: v${{ steps.version.outputs.version }}
+        release_name: Release ${{ steps.version.outputs.version }}
+        body_path: RELEASE_CHANGELOG.md
+        draft: true

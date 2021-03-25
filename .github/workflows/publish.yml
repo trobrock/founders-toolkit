@@ -1,0 +1,30 @@
+name: Publish Packages
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # Build Rubygems
+    - uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 3.0
+    - name: Configure Rubygems Credentials
+      run: |
+        mkdir $HOME/.gem
+        touch $HOME/.gem/credentials
+        chmod 0600 $HOME/.gem/credentials
+        printf -- "---\n:rubygems_api_key: \"${{ secrets.RUBYGEMS_AUTH_TOKEN }}\"\n" > $HOME/.gem/credentials
+    - run: gem build founders_toolkit.gemspec
+    - uses: actions/upload-artifact@v2
+      with:
+        name: gem
+        path: "*.gem"
+
+    # Publish to Rubygems
+    - run: "gem push *.gem"
