@@ -3,7 +3,7 @@
 require_relative 'lib/founders_toolkit/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'founders-toolkit'
+  spec.name          = 'founders_toolkit'
   spec.version       = FoundersToolkit::VERSION
   spec.authors       = ['Trae Robrock', 'Andrew Katz']
   spec.email         = ['trobrock@gmail.com', 'andrew.katz@hey.com']
