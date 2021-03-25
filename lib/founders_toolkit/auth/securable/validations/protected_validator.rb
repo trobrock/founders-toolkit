@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'active_model/validator'
-
 module FoundersToolkit::Auth::Securable::Validations
   class ProtectedValidator < ActiveModel::EachValidator
     def initialize(options)

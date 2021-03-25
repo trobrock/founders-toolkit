@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'validations/protected'
-
 module FoundersToolkit::Auth::Securable::Model
   extend ActiveSupport::Concern
 

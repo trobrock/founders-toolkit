@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../util/lockable'
-
 module FoundersToolkit::Jobs
   module LockedJob
     extend ActiveSupport::Concern
