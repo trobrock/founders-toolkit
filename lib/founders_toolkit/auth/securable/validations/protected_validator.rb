@@ -8,6 +8,7 @@ module FoundersToolkit::Auth::Securable::Validations
     end
 
     def validate_each(record, attribute, _value)
+      return if record.new_record?
       return unless attribute_changed?(record, attribute)
       return if authenticate?(record)
 
