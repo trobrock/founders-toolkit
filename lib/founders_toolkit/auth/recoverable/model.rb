@@ -4,8 +4,6 @@ module FoundersToolkit::Auth::Recoverable::Model
   extend ActiveSupport::Concern
 
   included do
-    include FoundersToolkit::Auth::Confirmable::Model
-
     before_save :clear_reset_password_token, if: :password_digest_changed?
   end
 
