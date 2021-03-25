@@ -11,7 +11,7 @@ module FoundersToolkit::Auth::Securable::Validations
 
     def validate_each(record, attribute, _value)
       return unless attribute_changed?(record, attribute)
-      return if record.authenticate(record.current_password)
+      return if authenticate?(record)
 
       human_attribute_name = record.class.human_attribute_name(attribute)
       record.errors.add(
@@ -29,6 +29,10 @@ module FoundersToolkit::Auth::Securable::Validations
     def attribute_changed?(record, attribute)
       attribute = "#{attribute}_digest" if options[:secure]
       record.public_send("#{attribute}_changed?")
+    end
+
+    def authenticate?(record)
+      record.try(:reset_password_token?) || record.authenticate(record.current_password)
     end
 
     module HelperMethods
