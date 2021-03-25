@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2021-03-25
+### Fixed
+- Fixed the protected attributes validator when updating the password.
+
 ## [0.1.0] - 2021-03-25
 - No real change, just CI
 
