@@ -31,13 +31,15 @@ module FoundersToolkit::Util
           limiter = instance_variable_get("@#{limiter_name}".to_sym)
           limiter ||= instance_variable_set("@#{limiter_name}".to_sym, Ratelimit.new(name))
 
-          limiter.exec_within_threshold(__send__(key), threshold: threshold, interval: interval) do
-            result = statsd.time(['retryable', limiter_name].join('.')) do
-              Retryable.retryable(tries: 3, on: retry_from) { block.call }
-            end
-            limiter.add __send__(key)
-            result
+          statsd.time(['throttled', limiter_name].join('.')) do
+            sleep 1 while limiter.exceeded?(__send__(key), threshold: threshold, interval: interval)
           end
+
+          result = statsd.time(['retryable', limiter_name].join('.')) do
+            Retryable.retryable(tries: 3, on: retry_from) { block.call }
+          end
+          limiter.add __send__(key)
+          result
         end
       end
     end
