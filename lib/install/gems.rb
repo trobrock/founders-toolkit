@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 say 'Add gems'
-insert_into_file 'Gemfile', "\ngem 'tailwindcss-rails'\n", after: /^gem 'founders_toolkit'.+$/
-insert_into_file 'Gemfile', "\ngem 'hotwire-rails'\n", after: /^gem 'founders_toolkit'.+$/
+gem 'hotwire-rails'
+gem 'tailwindcss-rails'
 run 'bin/bundle install'
 
 say 'Install Tailwind CSS'

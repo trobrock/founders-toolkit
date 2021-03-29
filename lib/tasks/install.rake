@@ -10,5 +10,7 @@ namespace :founders_toolkit do
   desc 'Install Founders Toolkit'
   task :install do
     run_install_template 'gems'
+    run_install_template 'current'
+    run_install_template 'linters'
   end
 end
