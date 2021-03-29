@@ -14,8 +14,6 @@ rescue LoadError
   raise
 end
 
-require_relative '../monitoring/statsdable'
-
 module FoundersToolkit::Util
   module RateLimitable
     extend ActiveSupport::Concern
@@ -31,8 +29,9 @@ module FoundersToolkit::Util
           limiter = instance_variable_get("@#{limiter_name}".to_sym)
           limiter ||= instance_variable_set("@#{limiter_name}".to_sym, Ratelimit.new(name))
 
-          statsd.time(['throttled', limiter_name].join('.')) do
-            sleep 1 while limiter.exceeded?(__send__(key), threshold: threshold, interval: interval)
+          while limiter.exceeded?(__send__(key), threshold: threshold, interval: interval)
+            statsd.increment ['thottled', limiter_name].join('.')
+            sleep 5
           end
 
           result = statsd.time(['retryable', limiter_name].join('.')) do
