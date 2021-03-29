@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2021-03-29
+- Added TrackedJob for simple statsd active job monitoring
+
 ## [0.2.1] - 2021-03-25
 ### Fixed
 - Fixed the protected attributes validator when updating the password.
