@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2021-03-29
+
+- Added install rake task.
+- Remove email as a protected attribute by default.
+
 ## [0.4.0] - 2021-03-29
 - Add tracking to limitable
 
