@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2021-03-29
+- Fix for rate limiter
+
 ## [0.5.0] - 2021-03-29
 
 - Added install rake task.
