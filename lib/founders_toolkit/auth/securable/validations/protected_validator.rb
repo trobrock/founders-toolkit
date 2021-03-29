@@ -31,7 +31,10 @@ module FoundersToolkit::Auth::Securable::Validations
     end
 
     def authenticate?(record)
-      record.try(:reset_password_token?) || record.authenticate(record.current_password)
+      return true if record.try(:reset_password_token?)
+
+      fresh_record = record.class.find(record.id)
+      fresh_record.authenticate(record.current_password)
     end
 
     module HelperMethods
