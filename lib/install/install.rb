@@ -2,12 +2,29 @@
 
 source_paths << File.expand_path('templates', __dir__)
 
-say 'Add rubocop'
+say 'Copy the files'
+copy_file 'current.rb', 'app/models/current.rb'
+copy_file 'Procfile'
+copy_file '.rubocop.yml'
+copy_file 'Brewfile'
+run 'brew bundle'
+
+say 'Add gems'
+gem 'hotwire-rails'
+gem 'tailwindcss-rails'
+gem 'resque'
+gem 'resque-scheduler'
 gem_group :development do
+  gem 'foreman'
   gem 'rubocop'
 end
 run 'bin/bundle install'
-copy_file '.rubocop.yml', '.rubocop.yml'
+
+say 'Install Tailwind CSS'
+rails_command 'tailwindcss:install'
+
+say 'Install Hotwire'
+rails_command 'hotwire:install'
 
 say 'Add Standard'
 run 'yarn add --dev standardjs @babel/eslint-parser'
