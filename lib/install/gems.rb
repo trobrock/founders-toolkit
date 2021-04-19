@@ -3,7 +3,7 @@
 say 'Add gems'
 gem 'hotwire-rails'
 gem 'tailwindcss-rails'
-run 'bundle install'
+run 'bin/bundle install'
 
 say 'Install Tailwind CSS'
 rails_command 'tailwindcss:install'
