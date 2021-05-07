@@ -3,9 +3,24 @@
 source_paths << File.expand_path('templates', __dir__)
 
 say 'Copy the files'
-copy_file 'current.rb', 'app/models/current.rb'
-copy_file 'Procfile'
-copy_file '.rubocop.yml'
+%w(
+  .rubocop.yml
+  Procfile
+  app/controllers/sessions_controller.rb
+  app/controllers/users_controller.rb
+  app/models/current.rb
+  app/models/guest.rb
+  app/models/user.rb
+  app/views/sessions/new.html.erb
+).each do |file|
+  copy_file(file)
+end
+
+say 'Adding routes'
+route 'resource :session'
+route 'resource :user'
+
+say 'Brew the things'
 copy_file 'Brewfile'
 run 'brew bundle'
 
@@ -31,16 +46,16 @@ run 'yarn add --dev standardjs @babel/eslint-parser'
 
 package_json = JSON.parse(File.read('package.json'))
 package_json['standard'] = {
-  "globals": %w(
+  globals: %w(
     fetch
     FormData
     CustomEvent
     IntersectionObserver
   ),
-  "parser": '@babel/eslint-parser'
+  parser: '@babel/eslint-parser'
 }
 package_json['babel'] = {
-  "presets": [
+  presets: [
     './node_modules/@rails/webpacker/package/babel/preset.js'
   ]
 }

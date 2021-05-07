@@ -6,4 +6,8 @@ module FoundersToolkit::Auth::Securable::CurrentAttributes
   included do
     attribute :user
   end
+
+  def user
+    super || ::Guest.new
+  end
 end

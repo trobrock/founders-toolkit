@@ -1,0 +1,33 @@
+<div class="flex flex-col space-y-4 justify-center items-center h-screen">
+  <% if @user.errors.present? %>
+    <div class="py-2 px-4 bg-red-500 rounded">
+      Could not create your account because of the following errors:
+      <ul class="list-disc ml-6">
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% form_with model: @user, class: 'flex-col space-y-2' do |f| %>
+    <div class="flex justify-between space-x-2 items-center">
+      <%= f.label :email %>
+      <%= f.text_field :email, class: 'rounded-sm px-4 py-2 border border-gray-700 bg-gray-800' %>
+    </div>
+
+    <div class="flex justify-between space-x-2 items-center">
+      <%= f.label :password %>
+      <%= f.password_field :password, class: 'rounded-sm px-4 py-2 border border-gray-700 bg-gray-800' %>
+    </div>
+
+    <div class="flex justify-between space-x-2 items-center">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, class: 'rounded-sm px-4 py-2 border border-gray-700 bg-gray-800' %>
+    </div>
+
+    <div class="flex justify-between items-end">
+      <%= link_to 'or Login', new_session_path, class: 'text-blue-500 text-underline font-sans text-lg' %>
+      <%= f.submit 'Sign Up', class: 'rounded bg-blue-600 py-2 px-4' %>
+    </div>
+  <% end %>
+</div>
