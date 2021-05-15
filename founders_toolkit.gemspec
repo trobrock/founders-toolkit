@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'Founders Toolkit for Rails'
   spec.homepage      = 'https://github.com/trobrock/founders-toolkit'
   spec.license       = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
+  spec.required_ruby_version = Gem::Requirement.new('>= 3.0.1')
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/trobrock/founders-toolkit.git'
